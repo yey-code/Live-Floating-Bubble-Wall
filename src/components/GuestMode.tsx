@@ -119,7 +119,7 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value.slice(0, MAX_NAME_LENGTH))}
                 placeholder="Enter your name"
-                className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 placeholder-gray-500 bg-white border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 maxLength={MAX_NAME_LENGTH}
               />
             </div>
@@ -134,7 +134,7 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
                 value={program}
                 onChange={(e) => setProgram(e.target.value.slice(0, MAX_PROGRAM_LENGTH))}
                 placeholder="e.g., BSIT 4-2"
-                className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 placeholder-gray-500 bg-white border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 maxLength={MAX_PROGRAM_LENGTH}
               />
             </div>
@@ -149,7 +149,7 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
               value={text}
               onChange={(e) => setText(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
               placeholder="Type your message..."
-              className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+              className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 placeholder-gray-500 bg-white border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
               rows={3}
               maxLength={MAX_MESSAGE_LENGTH}
             />
