@@ -243,20 +243,6 @@ export const HostMode: React.FC<HostModeProps> = ({ roomId }) => {
       {bubbles.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center text-white px-8">
-            <div className="mb-8">
-              <svg 
-                className="w-32 h-32 mx-auto mb-6 opacity-80"
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5"
-              >
-                <circle cx="12" cy="12" r="10" className="animate-pulse" />
-                <circle cx="8" cy="10" r="1.5" fill="currentColor" />
-                <circle cx="16" cy="10" r="1.5" fill="currentColor" />
-                <path d="M8 15c1 1.5 3 2 4 2s3-.5 4-2" strokeLinecap="round" />
-              </svg>
-            </div>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
               A1SBERG Bubble Wall
             </h1>
