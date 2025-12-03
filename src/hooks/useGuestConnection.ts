@@ -24,16 +24,22 @@ export function useGuestConnection(roomId: string): UseGuestConnectionResult {
           { urls: 'stun:stun.l.google.com:19302' },
           { urls: 'stun:stun1.l.google.com:19302' },
           {
-            urls: 'turn:openrelay.metered.ca:80',
+            urls: ['turn:openrelay.metered.ca:80'],
             username: 'openrelayproject',
             credential: 'openrelayproject',
           },
           {
-            urls: 'turn:openrelay.metered.ca:443',
+            urls: ['turn:openrelay.metered.ca:443'],
+            username: 'openrelayproject',
+            credential: 'openrelayproject',
+          },
+          {
+            urls: ['turn:openrelay.metered.ca:443?transport=tcp'],
             username: 'openrelayproject',
             credential: 'openrelayproject',
           },
         ],
+        iceTransportPolicy: 'all',
       },
     });
 
@@ -41,9 +47,20 @@ export function useGuestConnection(roomId: string): UseGuestConnectionResult {
       console.log('Attempting to connect to host:', hostPeerId);
       const conn = peer.connect(hostPeerId, {
         reliable: true,
+        serialization: 'json',
       });
       
+      // Set a connection timeout
+      const timeout = setTimeout(() => {
+        if (!conn.open) {
+          console.error('Connection timeout');
+          setError('Connection timeout. Please check if the host is online and try refreshing.');
+          conn.close();
+        }
+      }, 15000); // 15 second timeout
+      
       conn.on('open', () => {
+        clearTimeout(timeout);
         console.log('Connected to host:', hostPeerId);
         setIsConnected(true);
         setError(null);
@@ -51,11 +68,13 @@ export function useGuestConnection(roomId: string): UseGuestConnectionResult {
       });
 
       conn.on('error', (err) => {
+        clearTimeout(timeout);
         console.error('Connection error:', err);
         setError('Failed to connect to host. Make sure the host is online.');
       });
 
       conn.on('close', () => {
+        clearTimeout(timeout);
         console.log('Connection closed');
         setIsConnected(false);
       });
