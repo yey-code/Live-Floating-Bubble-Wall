@@ -27,7 +27,7 @@ export const COLORS = [
   { name: 'Peach', class: 'bg-orange-300' },
   { name: 'Burnt Orange', class: 'bg-orange-700' },
   { name: 'Light Orange', class: 'bg-orange-200' },
-  { name: 'Tangerine', class: 'bg-orange-500' },
+  { name: 'Warm Yellow', class: 'bg-yellow-500' },
 ];
 
 export const ICONS = [
