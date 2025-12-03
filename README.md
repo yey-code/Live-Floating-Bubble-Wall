@@ -1,4 +1,4 @@
-# Ephemeral Bubble Message Wall
+# A1SBERG Bubble Message Wall
 
 A lightweight, browser-based interactive display system for events that allows hosts to project floating message bubbles while attendees send messages in real-time using their smartphones.
 
@@ -7,9 +7,11 @@ A lightweight, browser-based interactive display system for events that allows h
 - **Zero-Config Deployment**: Runs as a purely static site (no backend, no database)
 - **No Persistent Storage**: All messages are ephemeral and transmitted peer-to-peer
 - **Instant Delivery**: < 500ms latency from send to display
-- **Visual Appeal**: 60fps physics-based bubble animation
+- **Visual Appeal**: 60fps physics-based bubble animation with collision detection
 - **Privacy-First**: No data storage, GDPR/CCPA compliant
-- **Mobile-Friendly**: Works on iOS Safari and Android Chrome
+- **Mobile-Friendly**: Optimized for iOS Safari and Android Chrome with dark mode support
+- **TURN/STUN Support**: Works on mobile data networks with NAT traversal
+- **Collision Detection**: Bubbles bounce off walls and the QR code area
 
 ## 🚀 Quick Start
 
@@ -39,18 +41,20 @@ The static files will be generated in the `dist/` folder.
 
 ### For Hosts (Event Organizers)
 
-1. Open the website on your laptop/projector
-2. A unique room code will be automatically generated
+1. Open the website (e.g., `https://live-floating-bubble-wall.vercel.app`)
+2. A unique room code will be automatically generated (e.g., `a1sberg-1733241567892345`)
 3. A QR code will appear on the screen
-4. Guests scan the QR code to join your session
+4. Click "Copy Host URL" to save your specific room link for later use
+5. Guests scan the QR code or use the shared link to join your session
 
 ### For Guests (Attendees)
 
 1. Scan the QR code displayed on the screen
-2. Type your message (max 60 characters)
-3. Choose a color and icon
-4. Hit "Send Message"
-5. Watch your message appear on the big screen!
+2. Enter your name and program/section (optional)
+3. Type your message (max 100 characters)
+4. Choose a color and icon
+5. Hit "Send Message"
+6. Watch your message appear on the big screen!
 
 ## 🏗️ Architecture
 
@@ -62,19 +66,22 @@ The static files will be generated in the `dist/` folder.
 - **Icons**: Lucide React
 - **P2P Communication**: PeerJS (WebRTC)
 - **QR Codes**: qrcode.react
+- **ICE Servers**: Google STUN + OpenRelay TURN servers
 
 ### How It Works
 
 1. **Host Mode**: 
-   - Generates a unique room ID
+   - Generates a unique room ID with timestamp
    - Creates a PeerJS peer acting as the "server"
    - Displays QR code for guests to join
    - Renders bubbles with physics-based animation
+   - Detects collisions with QR code area
 
 2. **Guest Mode**:
    - Extracts room ID from URL hash
-   - Connects to host's PeerJS peer
+   - Connects to host's PeerJS peer via WebRTC
    - Sends message payloads directly to host
+   - Works on WiFi and mobile data (TURN relay)
 
 3. **Message Flow**:
    ```
@@ -86,6 +93,8 @@ The static files will be generated in the `dist/` folder.
 ```typescript
 interface BubbleMessage {
   id: string;      // UUID
+  name: string;    // Sender name
+  program: string; // Program/section
   text: string;    // Message content
   color: string;   // Tailwind class
   icon: string;    // Icon name
