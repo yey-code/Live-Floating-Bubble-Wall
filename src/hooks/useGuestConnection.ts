@@ -16,9 +16,25 @@ export function useGuestConnection(roomId: string): UseGuestConnectionResult {
   const reconnectTimeoutRef = useRef<number>();
 
   useEffect(() => {
-    // Create peer for guest
+    // Create peer for guest with ICE servers for better connectivity
     const peer = new Peer({
       debug: 2,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' },
+          {
+            urls: 'turn:openrelay.metered.ca:80',
+            username: 'openrelayproject',
+            credential: 'openrelayproject',
+          },
+          {
+            urls: 'turn:openrelay.metered.ca:443',
+            username: 'openrelayproject',
+            credential: 'openrelayproject',
+          },
+        ],
+      },
     });
 
     const connectToHost = (hostPeerId: string) => {
