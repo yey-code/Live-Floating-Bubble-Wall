@@ -65,51 +65,53 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
   const borderColor = isLightColor ? 'border-gray-800/20' : 'border-white/30';
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-2 sm:p-3 overflow-hidden">
-      <div className="max-w-5xl w-full h-full max-h-[96vh] bg-white rounded-lg sm:rounded-xl shadow-2xl p-3 sm:p-4 flex flex-col">
+    <div className="w-full min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto">
+      <div className="max-w-5xl w-full bg-white rounded-lg sm:rounded-xl shadow-2xl p-4 sm:p-6 my-2 sm:my-4 flex flex-col">
         {/* Header Section */}
-        <div className="mb-2 sm:mb-3">
+        <div className="mb-3 sm:mb-4">
           {/* A1SBERG Logo */}
-          <div className="flex justify-center mb-2">
-            <img src={a1sbergLogo} alt="A1SBERG" className="h-12 sm:h-14 w-auto" />
+          <div className="flex justify-center mb-2 sm:mb-3">
+            <img src={a1sbergLogo} alt="A1SBERG" className="h-10 sm:h-14 w-auto" />
           </div>
           
           <div className="text-center">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">
+            <h1 className="text-lg sm:text-2xl font-bold text-gray-800 mb-1">
             Send a Message
           </h1>
-          <p className="text-[10px] sm:text-xs text-gray-600">Room: <span className="font-mono font-bold">{roomId}</span></p>
+          <p className="text-xs sm:text-sm text-gray-600 break-all px-2">
+            Room: <span className="font-mono font-bold text-[10px] sm:text-xs">{roomId}</span>
+          </p>
           
           {/* Connection Status */}
-          <div className="mt-1">
+          <div className="mt-2">
             {isConnected ? (
               <div className="flex items-center justify-center gap-1.5 text-green-600">
-                <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span className="text-[10px] sm:text-xs font-medium">Connected</span>
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-xs sm:text-sm font-medium">Connected</span>
               </div>
             ) : (
               <div className="flex items-center justify-center gap-1.5 text-yellow-600">
-                <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
-                <span className="text-[10px] sm:text-xs font-medium">Connecting...</span>
+                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                <span className="text-xs sm:text-sm font-medium">Connecting...</span>
               </div>
             )}
           </div>
 
           {error && (
-            <div className="mt-1 flex items-center justify-center gap-1.5 text-red-600">
-              <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="text-[9px] sm:text-[10px]">{error}</span>
+            <div className="mt-2 flex items-center justify-center gap-1.5 text-red-600">
+              <XCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-xs sm:text-sm">{error}</span>
             </div>
           )}
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-2.5 sm:space-y-3 flex-1 flex flex-col">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 flex-1 flex flex-col">
           {/* Name and Program - Side by side on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {/* Name Input */}
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1.5">
                 Your Name
               </label>
               <input
@@ -117,14 +119,14 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value.slice(0, MAX_NAME_LENGTH))}
                 placeholder="Enter your name"
-                className="w-full px-3 py-2 text-xs sm:text-sm border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 maxLength={MAX_NAME_LENGTH}
               />
             </div>
 
             {/* Program, Year & Section */}
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1.5">
                 Program, Year & Section
               </label>
               <input
@@ -132,7 +134,7 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
                 value={program}
                 onChange={(e) => setProgram(e.target.value.slice(0, MAX_PROGRAM_LENGTH))}
                 placeholder="e.g., BSIT 4-2"
-                className="w-full px-3 py-2 text-xs sm:text-sm border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 maxLength={MAX_PROGRAM_LENGTH}
               />
             </div>
@@ -140,37 +142,37 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
 
           {/* Message Input */}
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1.5">
               Your Message *
             </label>
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
               placeholder="Type your message..."
-              className="w-full px-3 py-2 text-xs sm:text-sm border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+              className="w-full px-3 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
               rows={3}
               maxLength={MAX_MESSAGE_LENGTH}
             />
-            <p className="text-[9px] text-gray-500 mt-0.5 text-right">
+            <p className="text-xs text-gray-500 mt-1 text-right">
               {text.length} / {MAX_MESSAGE_LENGTH}
             </p>
           </div>
 
           {/* Color and Icon Pickers - Side by side on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {/* Color Picker */}
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1.5">
                 Choose Color
               </label>
-              <div className="grid grid-cols-4 gap-1.5">
+              <div className="grid grid-cols-4 gap-2">
                 {COLORS.map((c) => (
                   <button
                     key={c.class}
                     type="button"
                     onClick={() => setColor(c.class)}
-                    className={`${c.class} rounded-lg h-10 sm:h-12 transition-all ${
-                      color === c.class ? 'ring-4 ring-offset-2 ring-purple-600' : 'hover:opacity-80'
+                    className={`${c.class} rounded-lg h-12 sm:h-14 transition-all ${
+                      color === c.class ? 'ring-4 ring-offset-2 ring-purple-600 scale-105' : 'hover:opacity-80'
                     }`}
                     title={c.name}
                   />
@@ -180,10 +182,10 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
 
             {/* Icon Picker */}
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1.5">
                 Choose Icon
               </label>
-              <div className="grid grid-cols-5 gap-1.5">
+              <div className="grid grid-cols-5 gap-2">
                 {ICONS.map((iconName) => {
                   const Icon = (LucideIcons as any)[iconName] || LucideIcons.MessageCircle;
                   return (
@@ -191,14 +193,14 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
                       key={iconName}
                       type="button"
                       onClick={() => setIcon(iconName)}
-                      className={`p-2 border-2 rounded-lg transition-all hover:scale-110 active:scale-95 ${
+                      className={`p-2 sm:p-2.5 border-2 rounded-lg transition-all hover:scale-110 active:scale-95 ${
                         icon === iconName
                           ? 'border-purple-500 bg-purple-50 scale-110'
                           : 'border-gray-200 bg-white'
                       }`}
                       title={iconName}
                     >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 mx-auto text-gray-700" />
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 mx-auto text-gray-700" />
                     </button>
                   );
                 })}
@@ -207,26 +209,26 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
           </div>
 
           {/* Preview */}
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-2.5 sm:p-3 flex-1 flex flex-col min-h-[180px]">
-            <p className="text-xs sm:text-sm font-medium text-gray-700 mb-2">Preview</p>
-            <div className="flex-1 flex items-center justify-center">
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-3 sm:p-4">
+            <p className="text-sm sm:text-base font-medium text-gray-700 mb-3">Preview</p>
+            <div className="flex items-center justify-center min-h-[160px] sm:min-h-[180px]">
             <div
-              className={`${color} rounded-xl p-3 flex flex-col w-full max-w-[160px] shadow-lg`}
-              style={{ minHeight: '140px' }}
+              className={`${color} rounded-xl p-4 flex flex-col w-full max-w-[180px] sm:max-w-[200px] shadow-lg`}
+              style={{ minHeight: '150px' }}
             >
               {/* Header */}
-              <div className={`flex items-center gap-1.5 mb-1.5 pb-1.5 border-b ${borderColor}`}>
-                <IconComponent className={`w-4 h-4 ${iconColor} flex-shrink-0`} />
-                <p className={`${textColor} text-xs font-bold truncate flex-1`}>
+              <div className={`flex items-center gap-2 mb-2 pb-2 border-b ${borderColor}`}>
+                <IconComponent className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
+                <p className={`${textColor} text-sm font-bold truncate flex-1`}>
                   {name || 'Your Name'}
                 </p>
               </div>
               {/* Program */}
-              <div className={`${textColor} opacity-90 text-[10px] font-semibold mb-1.5`}>
+              <div className={`${textColor} opacity-90 text-xs font-semibold mb-2`}>
                 {program || 'BSIT 4-2'}
               </div>
               {/* Message */}
-              <p className={`${textColor} text-[10px] leading-tight break-words line-clamp-3`}>
+              <p className={`${textColor} text-xs leading-tight break-words line-clamp-4`}>
                 {text || 'Your message...'}
               </p>
             </div>
@@ -237,7 +239,7 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
           <button
             type="submit"
             disabled={!text.trim() || cooldown || !isConnected || isSending}
-            className={`w-full py-3 sm:py-4 rounded-lg font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2 ${
+            className={`w-full py-3.5 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all flex items-center justify-center gap-2 ${
               showSuccess
                 ? 'bg-green-500 text-white'
                 : !text.trim() || cooldown || !isConnected || isSending
@@ -247,19 +249,19 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
           >
             {isSending ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin" />
                 <span>Sending...</span>
               </>
             ) : showSuccess ? (
               <>
-                <CheckCircle className="w-5 h-5" />
+                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                 <span>Sent!</span>
               </>
             ) : cooldown ? (
               <span>Wait {SEND_COOLDOWN_MS / 1000}s...</span>
             ) : (
               <>
-                <Send className="w-5 h-5" />
+                <Send className="w-5 h-5 sm:w-6 sm:h-6" />
                 <span>Send Message</span>
               </>
             )}
