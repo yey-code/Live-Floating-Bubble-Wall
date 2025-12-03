@@ -3,8 +3,8 @@ import { HostMode } from './components/HostMode';
 import { GuestMode } from './components/GuestMode';
 import { getRoomIdFromHash, setRoomIdInHash } from './utils';
 
-// Permanent fixed room code
-const PERMANENT_ROOM_ID = 'a1sberg-12345';
+// Room code prefix
+const ROOM_PREFIX = 'a1sberg';
 
 function App() {
   const [mode, setMode] = useState<'host' | 'guest' | 'loading'>('loading');
@@ -23,13 +23,16 @@ function App() {
       setRoomId(existingRoomId);
       setMode('guest');
     } else if (existingRoomId && modeParam === 'host') {
-      // Host mode with existing room ID
+      // Host mode with existing room ID (from copied URL)
       setRoomId(existingRoomId);
       setMode('host');
     } else {
-      // Host mode - use permanent fixed room ID
-      setRoomId(PERMANENT_ROOM_ID);
-      setRoomIdInHash(PERMANENT_ROOM_ID);
+      // Host mode - generate unique room ID to avoid conflicts
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 1000);
+      const uniqueRoomId = `${ROOM_PREFIX}-${timestamp}${random}`;
+      setRoomId(uniqueRoomId);
+      setRoomIdInHash(uniqueRoomId);
       setMode('host');
     }
   }, []);
