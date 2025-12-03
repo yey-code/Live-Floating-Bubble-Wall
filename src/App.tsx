@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { HostMode } from './components/HostMode';
 import { GuestMode } from './components/GuestMode';
-import { generateRoomId, getRoomIdFromHash, setRoomIdInHash } from './utils';
+import { getRoomIdFromHash, setRoomIdInHash } from './utils';
+
+// Permanent room code
+const PERMANENT_ROOM_ID = 'a1sberg-bubble-wall';
 
 function App() {
   const [mode, setMode] = useState<'host' | 'guest' | 'loading'>('loading');
@@ -24,10 +27,9 @@ function App() {
       setRoomId(existingRoomId);
       setMode('host');
     } else {
-      // Host mode - generate new room ID
-      const newRoomId = generateRoomId();
-      setRoomId(newRoomId);
-      setRoomIdInHash(newRoomId);
+      // Host mode - use permanent room ID
+      setRoomId(PERMANENT_ROOM_ID);
+      setRoomIdInHash(PERMANENT_ROOM_ID);
       setMode('host');
     }
   }, []);
