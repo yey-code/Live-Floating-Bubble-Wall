@@ -205,8 +205,69 @@ export const ICONS = [
 - **No User Accounts**: Complete anonymity for guests
 - **No Tracking**: No analytics or cookies
 - **GDPR Compliant**: No personal data collection
+- **Peer-to-Peer**: Direct connections, no data passes through servers
+
+## ⚠️ Known Limitations
+
+### Session Persistence
+- **Room sessions are temporary**: Rooms only exist while the host browser window is open
+- **Closing the host browser**: Ends the session and invalidates all guest connections
+- **Bookmarked URLs**: Work only if the host maintains the same session
+- **No backend storage**: Messages and sessions are not saved or recoverable
+
+### Network Connectivity
+- **Mobile data reliability**: While TURN servers help, some mobile carriers may restrict WebRTC
+- **Free TURN servers**: Public servers may have rate limits or occasional downtime
+- **Corporate networks**: May block WebRTC ports (3478, 5349)
+- **Firewall restrictions**: Strict NAT configurations may prevent connections
+
+### Scalability
+- **Recommended**: Up to 50 concurrent guests per host session
+- **Performance**: Large numbers of simultaneous connections may impact host device
+- **TURN relay**: Free servers have bandwidth limitations for many users
+
+### Browser Compatibility
+- **Safari limitations**: Older iOS versions may have WebRTC restrictions
+- **Private browsing**: May disable WebRTC in some browsers
+- **Extensions**: Ad blockers may interfere with peer connections
+
+**For production use with guaranteed reliability:**
+1. Deploy your own TURN server
+2. Use a dedicated host device
+3. Ensure stable WiFi for the host
+4. Test connectivity before the event
 
 ## 🐛 Troubleshooting
+
+### Connection Issues on Mobile Data
+
+The app includes TURN/STUN servers to improve connectivity on mobile data networks. However, some limitations may still exist:
+
+**What works:**
+- ✅ WiFi connections (both host and guests)
+- ✅ Host on WiFi, guests on mobile data (most cases)
+- ✅ Host on WiFi, guests on different networks
+
+**Potential issues:**
+- ⚠️ Both host and guests on strict NAT/firewall networks
+- ⚠️ Corporate networks with WebRTC restrictions
+- ⚠️ Some mobile carriers block WebRTC traffic
+
+**Solutions:**
+1. Ensure the host is on a stable WiFi connection
+2. Ask guests to refresh if they see "Connecting..." for >15 seconds
+3. Check that WebRTC is enabled in browser settings
+4. Try a different browser (Chrome recommended)
+5. If persistent issues occur, consider using a VPN
+
+**Technical Note:** The app uses free public TURN servers (OpenRelay) which may have rate limits during peak usage. For production events with many users, consider deploying your own TURN server.
+
+### Room ID Already in Use
+
+If you see this error:
+- The room ID is being used by another instance
+- Refresh the host page to generate a new unique ID
+- Use the "Copy Host URL" to save your specific room for reuse
 
 ### PeerJS Connection Issues
 
