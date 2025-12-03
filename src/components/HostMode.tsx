@@ -77,6 +77,14 @@ export const HostMode: React.FC<HostModeProps> = ({ roomId }) => {
         if (!container) return prev;
 
         const rect = container.getBoundingClientRect();
+        
+        // QR Code box dimensions (top-right corner)
+        const qrBox = {
+          x: rect.width - 4 * 16 - 232, // right-4 (1rem = 16px) + padding + QR size
+          y: 4 * 16, // top-4
+          width: 232, // p-6 (24px each side) + 180px QR + 4px extra
+          height: 276  // Approximate height including text
+        };
 
         return prev.map((bubble) => {
           let { x, y, vx, vy } = bubble;
@@ -96,6 +104,49 @@ export const HostMode: React.FC<HostModeProps> = ({ roomId }) => {
           if (y - radius <= 0 || y + radius >= rect.height) {
             vy = -vy;
             y = Math.max(radius, Math.min(rect.height - radius, y));
+          }
+
+          // Check collision with QR code box
+          const bubbleLeft = x - radius;
+          const bubbleRight = x + radius;
+          const bubbleTop = y - radius;
+          const bubbleBottom = y + radius;
+
+          const qrLeft = qrBox.x;
+          const qrRight = qrBox.x + qrBox.width;
+          const qrTop = qrBox.y;
+          const qrBottom = qrBox.y + qrBox.height;
+
+          // Check if bubble overlaps with QR box
+          if (bubbleRight > qrLeft && bubbleLeft < qrRight &&
+              bubbleBottom > qrTop && bubbleTop < qrBottom) {
+            
+            // Determine which side of the QR box the bubble is closest to
+            const overlapLeft = bubbleRight - qrLeft;
+            const overlapRight = qrRight - bubbleLeft;
+            const overlapTop = bubbleBottom - qrTop;
+            const overlapBottom = qrBottom - bubbleTop;
+
+            const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+
+            // Bounce based on the side with minimum overlap
+            if (minOverlap === overlapLeft || minOverlap === overlapRight) {
+              vx = -vx;
+              // Push bubble out of collision
+              if (minOverlap === overlapLeft) {
+                x = qrLeft - radius - 1;
+              } else {
+                x = qrRight + radius + 1;
+              }
+            } else {
+              vy = -vy;
+              // Push bubble out of collision
+              if (minOverlap === overlapTop) {
+                y = qrTop - radius - 1;
+              } else {
+                y = qrBottom + radius + 1;
+              }
+            }
           }
 
           return { ...bubble, x, y, vx, vy };
