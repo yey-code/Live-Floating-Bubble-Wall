@@ -3,8 +3,8 @@ import { HostMode } from './components/HostMode';
 import { GuestMode } from './components/GuestMode';
 import { getRoomIdFromHash, setRoomIdInHash } from './utils';
 
-// Permanent room code
-const PERMANENT_ROOM_ID = 'a1sberg-bubble-wall';
+// Permanent room code prefix
+const PERMANENT_ROOM_PREFIX = 'a1sberg-bubble-wall';
 
 function App() {
   const [mode, setMode] = useState<'host' | 'guest' | 'loading'>('loading');
@@ -27,9 +27,10 @@ function App() {
       setRoomId(existingRoomId);
       setMode('host');
     } else {
-      // Host mode - use permanent room ID
-      setRoomId(PERMANENT_ROOM_ID);
-      setRoomIdInHash(PERMANENT_ROOM_ID);
+      // Host mode - create unique room ID with timestamp to avoid conflicts
+      const uniqueRoomId = `${PERMANENT_ROOM_PREFIX}-${Date.now()}`;
+      setRoomId(uniqueRoomId);
+      setRoomIdInHash(uniqueRoomId);
       setMode('host');
     }
   }, []);
