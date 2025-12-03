@@ -17,7 +17,7 @@ export function generateUUID(): string {
 
 export function getRoomIdFromHash(): string | null {
   const hash = window.location.hash;
-  const match = hash.match(/#room=([A-Z0-9]+)/);
+  const match = hash.match(/#room=([A-Za-z0-9\-]+)/);
   return match ? match[1] : null;
 }
 
