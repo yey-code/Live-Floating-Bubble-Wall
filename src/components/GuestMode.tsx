@@ -65,7 +65,7 @@ export const GuestMode: React.FC<GuestModeProps> = ({ roomId }) => {
   const borderColor = isLightColor ? 'border-gray-800/20' : 'border-white/30';
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div className="w-full min-h-screen bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 flex items-start sm:items-center justify-center p-2 sm:p-4 overflow-y-auto">
       <div className="max-w-5xl w-full bg-white rounded-lg sm:rounded-xl shadow-2xl p-4 sm:p-6 my-2 sm:my-4 flex flex-col">
         {/* Header Section */}
         <div className="mb-3 sm:mb-4">

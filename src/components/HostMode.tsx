@@ -168,7 +168,7 @@ export const HostMode: React.FC<HostModeProps> = ({ roomId }) => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 overflow-hidden"
+      className="relative w-full h-full bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 overflow-hidden"
     >
       {/* Status Indicator */}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">

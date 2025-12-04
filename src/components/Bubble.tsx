@@ -17,7 +17,7 @@ export const Bubble: React.FC<BubbleProps> = ({ bubble }) => {
 
   return (
     <div
-      className={`absolute ${bubble.color} rounded-2xl shadow-xl flex flex-col p-4 transition-transform`}
+      className={`absolute ${bubble.color} rounded-2xl shadow-2xl flex flex-col p-4 transition-transform ring-2 ring-white/40`}
       style={{
         width: '180px',
         minHeight: '180px',
